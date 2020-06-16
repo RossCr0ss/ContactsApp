@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>REST API</title>
+
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container pt-2" id="app" v-cloak>
+        <h1>REST API</h1>
+
+        <form class="form-inline" @submit.prevent="createContact">
+            <div class="form-group mb-2">
+                <label for="name" class="mr-2">Name</label>
+                <input type="text" class="form-control" id="name" v-model="form.name">
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+                <label for="value" class="mr-2">Value</label>
+                <input type="text" class="form-control" id="value" v-model="form.value">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2" :disabled="!canCreate">Create</button>
+        </form>
+
+        <div v-if="contacts.length">
+            <div class="card mb-3" v-for="contact in contacts" > 
+                <div class="card-body" :style="{background: contact.marked ? 'grey' : 'white'}">
+                    <h5 class="card-title">{{contact.name}}</h5>
+                    <p class="card-text">{{contact.value}}</p>
+                    <button class="btn btn-primary mb-2" @click="markContact(contact.id)" :disabled="contact.marked">Choose</button>
+                    <button class="btn btn-danger mb-2" @click="deleteContact(contact.id)">Delete</button>
+                </div>
+            </div>
+        </div>
+        <p v-else>Contacts is empty</p>
+    </div>
+
+    <script type="module" src="frontend.js"></script>
+</body>
+
+</html>
